@@ -1,8 +1,22 @@
+import { useState } from 'react';
+
+import Header from './components/Header/Header';
+import Search from './components/Search/Search';
+
+import './App.scss';
+
 const App = () => {
+  const [searchString, changeSearchString] = useState('');
+
   return (
-    <div className='App'>
-      <h1>React Weather App</h1>
-    </div>
+    <>
+      <Header>
+        <Search
+          value={searchString}
+          onChangeFunc={changeSearchString}
+        />
+      </Header>
+    </>
   );
 }
 

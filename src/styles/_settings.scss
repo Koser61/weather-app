@@ -1,0 +1,20 @@
+$color-dark: #1D242B;
+$color-main: #0077C0;
+$color-light: #FAFAFA;
+
+$font-main: 'Roboto', sans-serif;
+
+$base-size: 16px;
+
+$radius: 12px;
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin resetInputStyle {
+  border: none;
+  padding: 0;
+}

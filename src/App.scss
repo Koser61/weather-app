@@ -1,0 +1,8 @@
+@use './styles/_global.scss';
+@use './styles/_typography.scss';
+@import './styles/_settings.scss';
+@import-normalize;
+
+body {
+  background-color: $color-light;
+}
