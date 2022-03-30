@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import Header from './components/Header/Header';
-import Search from './components/Search/Search';
+import SearchBar from './components/SearchBar/SearchBar';
+import SearchInput from './components/SearchInput/SearchInput';
+import SearchButton from './components/SearchButton/SearchButton';
 
 import './App.scss';
 
@@ -11,10 +13,13 @@ const App = () => {
   return (
     <>
       <Header>
-        <Search
-          value={searchString}
-          onChangeFunc={changeSearchString}
-        />
+        <SearchBar>
+          <SearchInput
+            value={searchString}
+            onChangeFunc={changeSearchString}
+          />
+          <SearchButton />
+        </SearchBar>
       </Header>
     </>
   );

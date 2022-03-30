@@ -1,0 +1,15 @@
+@import '../../styles/_settings.scss';
+
+.component {
+  @include resetInputStyle();
+  flex: 1;
+  padding-left: calc($base-size * 1.5);
+  padding-right: calc($base-size * 1.5);
+  background-color: $color-light;
+  font-family: $font-main;
+  font-size: $base-size;
+  text-overflow: ellipsis;
+  outline: none;
+  border-top-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+}

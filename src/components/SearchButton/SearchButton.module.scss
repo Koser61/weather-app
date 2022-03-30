@@ -1,0 +1,16 @@
+@import '../../styles/_settings.scss';
+
+.component {
+  @include resetInputStyle();
+  flex: 0;
+  padding: 0 15px 0 15px;
+  background-color: $color-main;
+  color: $color-light;
+  cursor: pointer;
+  border-top-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+
+  svg {
+    font-size: 30px;
+  }
+}
