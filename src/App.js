@@ -6,6 +6,7 @@ import SearchInput from './components/SearchInput/SearchInput';
 import SearchButton from './components/SearchButton/SearchButton';
 
 import './App.scss';
+import Container from './components/Container/Container';
 
 const App = () => {
   const [searchString, changeSearchString] = useState('');
@@ -52,6 +53,11 @@ const App = () => {
           <SearchButton onClickFunc={fetchCurrentWeatherData} />
         </SearchBar>
       </Header>
+      <main>
+        <Container>
+          <div></div>
+        </Container>
+      </main>
     </>
   );
 }
