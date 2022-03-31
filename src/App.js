@@ -4,9 +4,9 @@ import Header from './components/Header/Header';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchInput from './components/SearchInput/SearchInput';
 import SearchButton from './components/SearchButton/SearchButton';
+import Container from './components/Container/Container';
 
 import './App.scss';
-import Container from './components/Container/Container';
 
 const App = () => {
   const [searchString, changeSearchString] = useState('');
@@ -33,7 +33,6 @@ const App = () => {
   
         if(response.ok) {
           const data = await response.json();
-
           changeCurrentWeatherData(data);
         }
       } catch(error) {
@@ -55,7 +54,7 @@ const App = () => {
       </Header>
       <main>
         <Container>
-          <div></div>
+          
         </Container>
       </main>
     </>
