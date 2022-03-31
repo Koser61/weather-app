@@ -34,6 +34,7 @@ const App = () => {
         if(response.ok) {
           const data = await response.json();
           changeCurrentWeatherData(data);
+          console.log(currentWeatherData);
         }
       } catch(error) {
         console.log(error);
@@ -44,13 +45,15 @@ const App = () => {
   return (
     <>
       <Header>
-        <SearchBar>
-          <SearchInput
-            value={searchString}
-            onChangeFunc={changeSearchString}
-          />
-          <SearchButton onClickFunc={fetchCurrentWeatherData} />
-        </SearchBar>
+        <Container>
+          <SearchBar>
+            <SearchInput
+              value={searchString}
+              onChangeFunc={changeSearchString}
+            />
+            <SearchButton onClickFunc={fetchCurrentWeatherData} />
+          </SearchBar>
+        </Container>
       </Header>
       <main>
         <Container>

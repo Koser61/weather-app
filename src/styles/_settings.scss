@@ -4,15 +4,9 @@ $color-light: #ecf0f1;
 
 $font-main: 'Roboto', sans-serif;
 
-$base-size: 16px;
+$base-size: 14px;
 
 $radius: 12px;
-
-@mixin flexCenter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 @mixin resetInputStyle {
   border: none;
