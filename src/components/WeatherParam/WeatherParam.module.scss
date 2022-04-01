@@ -1,0 +1,33 @@
+@import '../../styles/_settings.scss';
+
+.base {
+  font-family: $font-main;
+
+  .param {
+    font-weight: bold;
+  }
+}
+
+.component {
+  @extend .base;
+  
+  p {
+    font-size: 14px;
+  }
+}
+
+.small {
+  @extend .base;
+
+  p {
+    font-size: 12px;
+  }
+}
+
+.param {
+  font-size: 40px;
+}
+
+.param_small {
+  font-size: 24px;
+}
