@@ -6,6 +6,7 @@ import SearchInput from './components/SearchInput/SearchInput';
 import SearchButton from './components/SearchButton/SearchButton';
 import Container from './components/Container/Container';
 import WeatherParam from './components/WeatherParam/WeatherParam';
+import WindDirection from './components/WindDirection/WindDirection';
 
 import './App.scss';
 
@@ -67,7 +68,7 @@ const App = () => {
           </WeatherParam>
           <br />
           <WeatherParam small description='Wind direction'>
-            <FontAwesomeIcon icon={faUpLong} />
+            <WindDirection degree={45} />
           </WeatherParam>
         </Container>
       </main>
