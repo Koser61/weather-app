@@ -5,13 +5,11 @@ import SearchBar from './components/SearchBar/SearchBar';
 import SearchInput from './components/SearchInput/SearchInput';
 import SearchButton from './components/SearchButton/SearchButton';
 import Container from './components/Container/Container';
-import WeatherParam from './components/WeatherParam/WeatherParam';
-import WindDirection from './components/WindDirection/WindDirection';
+//import WeatherParam from './components/WeatherParam/WeatherParam';
+//import WindDirection from './components/WindDirection/WindDirection';
+//import WeatherIcon from './components/WeatherIcon/WeatherIcon';
 
 import './App.scss';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpLong } from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
   const [searchString, changeSearchString] = useState('');
@@ -62,14 +60,7 @@ const App = () => {
       </Header>
       <main>
         <Container>
-          <br />
-          <WeatherParam description='Feels like 44°C'>
-            40°C
-          </WeatherParam>
-          <br />
-          <WeatherParam small description='Wind direction'>
-            <WindDirection degree={45} />
-          </WeatherParam>
+          
         </Container>
       </main>
     </>
