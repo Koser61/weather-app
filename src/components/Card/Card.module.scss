@@ -1,0 +1,8 @@
+@import '../../styles/settings';
+
+.component {
+  background-color: $color-dark;
+  border-radius: $radius;
+  padding: $base-size;
+  color: $color-light;
+}

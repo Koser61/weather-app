@@ -5,11 +5,11 @@ import SearchBar from './components/SearchBar/SearchBar';
 import SearchInput from './components/SearchInput/SearchInput';
 import SearchButton from './components/SearchButton/SearchButton';
 import Container from './components/Container/Container';
-//import WeatherParam from './components/WeatherParam/WeatherParam';
-//import WindDirection from './components/WindDirection/WindDirection';
-//import WeatherIcon from './components/WeatherIcon/WeatherIcon';
+import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 
 import './App.scss';
+
+import { data } from './mockData';
 
 const App = () => {
   const [searchString, changeSearchString] = useState('');
@@ -60,7 +60,7 @@ const App = () => {
       </Header>
       <main>
         <Container>
-          
+          <CurrentWeather data={data} />
         </Container>
       </main>
     </>
