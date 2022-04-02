@@ -1,5 +1,60 @@
 @import '../../styles/settings';
 
-.component {
+.header {
+  font-family: $font-main;
+  padding: calc($base-size / 2) 0 calc($base-size * 1.5) $base-size;
+  border-bottom: 1px solid $color-light-opaque;
   
+  h1 {
+    font-size: 26px;
+    word-break: break-all;
+  }
+
+  p {
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 175px 175px;
+  grid-template-areas:
+  "."
+  ".";
+}
+
+.mainParams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+  ". .";
+  border-bottom: 1px solid $color-light-opaque;
+}
+
+.otherParams {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+  ". . ."
+  ". . .";
+}
+
+@media only screen and (min-width: 625px) {
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 175px;
+    grid-template-areas:
+    ". .";
+  }
+
+  .mainParams {
+    border-bottom: none;
+    border-right: 1px solid $color-light-opaque;
+  }
 }

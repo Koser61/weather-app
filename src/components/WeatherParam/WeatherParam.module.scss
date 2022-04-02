@@ -2,9 +2,19 @@
 
 .base {
   font-family: $font-main;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  .param {
+  .param, .param_small {
     font-weight: bold;
+  }
+
+  p {
+    width: fit-content;
+    text-align: center;
+    margin-bottom: 0;
   }
 }
 
@@ -13,6 +23,7 @@
   
   p {
     font-size: 14px;
+    margin-top: 8px;
   }
 }
 
@@ -21,6 +32,7 @@
 
   p {
     font-size: 12px;
+    margin-top: 6px;
   }
 }
 
@@ -29,5 +41,5 @@
 }
 
 .param_small {
-  font-size: 24px;
+  font-size: 20px;
 }
