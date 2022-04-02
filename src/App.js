@@ -9,10 +9,9 @@ import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 
 import './App.scss';
 
-import { data } from './mockData';
-
 const App = () => {
   const [searchString, changeSearchString] = useState('');
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [currentWeatherData, changeCurrentWeatherData] = useState({});
 
   const fetchCurrentWeatherData = async () => {
@@ -37,7 +36,7 @@ const App = () => {
         if(response.ok) {
           const data = await response.json();
           changeCurrentWeatherData(data);
-          console.log(currentWeatherData);
+          setDataLoaded(true);
         }
       } catch(error) {
         console.log(error);
@@ -60,7 +59,9 @@ const App = () => {
       </Header>
       <main>
         <Container>
-          <CurrentWeather data={data} />
+          {dataLoaded &&
+            <CurrentWeather data={currentWeatherData} />
+          }
         </Container>
       </main>
     </>

@@ -8,39 +8,60 @@ import WindDirection from '../WindDirection/WindDirection';
 import styles from './CurrentWeather.module.scss';
 
 const CurrentWeather = ({ data }) => {
+  const { name, sys, dt, weather, main, wind, visibility, clouds } = data;
+
+  const miliseconds = dt * 1000;
+  const dateObject = new Date(miliseconds);
+  const date = dateObject.toLocaleString('en-US', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long'
+  });
+
+  const getVisibilityString = () => {
+    if(visibility >= 1000) {
+      const visibilityKilometres = visibility / 1000;
+      return `${Math.round(visibilityKilometres)}km`;
+    } else {
+      return `${Math.round(visibility)}m`;
+    }
+  };
+
   return (
     <Card>
       <div className={styles.header}>
-        <h1>London, GB</h1>
-        <p>Wednesday 30 March</p>
+        <h1>{`${name}, ${sys.country}`}</h1>
+        <p>{date}</p>
       </div>
       <div className={styles.grid}>
         <div className={styles.mainParams}>
-          <WeatherParam description='thunderstorm with heavy drizzle'>
-            <WeatherIcon iconCode='11d' />
+          <WeatherParam description={weather[0].description}>
+            <WeatherIcon iconCode={weather[0].icon} />
           </WeatherParam>
-          <WeatherParam description='Feels like 44°C'>
-            45°C
+          <WeatherParam
+            description={`Feels like ${Math.round(main.feels_like)}°C`}
+          >
+            {`${Math.round(main.temp)}°C`}
           </WeatherParam>
         </div>
         <div className={styles.otherParams}>
           <WeatherParam small description='Visibility'>
-            999m
+            {getVisibilityString()}
           </WeatherParam>
           <WeatherParam small description='Cloudiness'>
-            75%
+            {`${clouds.all}%`}
           </WeatherParam>
           <WeatherParam small description='Pressure'>
-            1004hPa
+            {`${main.pressure}hPa`}
           </WeatherParam>
           <WeatherParam small description='Humidity'>
-            78%
+            {`${main.humidity}%`}
           </WeatherParam>
           <WeatherParam small description='Wind direction'>
-            <WindDirection degree={45} />
+            <WindDirection degree={wind.deg} />
           </WeatherParam>
           <WeatherParam small description='Wind speed'>
-            100m/s
+            {`${Math.round(wind.speed)}m/s`}
           </WeatherParam>
         </div>
       </div>
