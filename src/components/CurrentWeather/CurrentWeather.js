@@ -48,17 +48,17 @@ const CurrentWeather = ({ data }) => {
           <WeatherParam small description='Visibility'>
             {getVisibilityString()}
           </WeatherParam>
-          <WeatherParam small description='Cloudiness'>
-            {`${clouds.all}%`}
-          </WeatherParam>
           <WeatherParam small description='Pressure'>
             {`${main.pressure}hPa`}
           </WeatherParam>
-          <WeatherParam small description='Humidity'>
-            {`${main.humidity}%`}
-          </WeatherParam>
           <WeatherParam small description='Wind direction'>
             <WindDirection degree={wind.deg} />
+          </WeatherParam>
+          <WeatherParam small description='Cloudiness'>
+            {`${clouds.all}%`}
+          </WeatherParam>
+          <WeatherParam small description='Humidity'>
+            {`${main.humidity}%`}
           </WeatherParam>
           <WeatherParam small description='Wind speed'>
             {`${Math.round(wind.speed)}m/s`}
