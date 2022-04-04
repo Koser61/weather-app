@@ -11,7 +11,12 @@ import './App.scss';
 
 const App = () => {
   const [searchString, changeSearchString] = useState('');
+
+  const [dataLoadingActive, setDataLoadingActive] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const [dataLoaded, setDataLoaded] = useState(false);
+
   const [currentWeatherData, changeCurrentWeatherData] = useState({});
 
   const fetchCurrentWeatherData = async () => {
@@ -31,16 +36,37 @@ const App = () => {
       const url = `${api.url}${api.endpoint}?${api.urlParams}`;
   
       try {
+        setAlertMessage('');
+        setShowErrorAlert(false);
+        setDataLoadingActive(true);
+
         const response = await fetch(url, options);
-  
+        const data = await response.json();
+
         if(response.ok) {
-          const data = await response.json();
           changeCurrentWeatherData(data);
           setDataLoaded(true);
+          setDataLoadingActive(false);
+        } else {
+          if(data.cod === '404') {
+            setAlertMessage("Cannot find given location");
+            setShowErrorAlert(true);
+            setDataLoadingActive(false);
+          } else {
+            setAlertMessage('Sorry, something went wrong');
+            setShowErrorAlert(true);
+            setDataLoadingActive(false);
+          }
         }
       } catch(error) {
-        console.log(error);
+        console.error(error);
+        setAlertMessage('Sorry, something went wrong');
+        setShowErrorAlert(true);
+        setDataLoadingActive(false);
       }
+    } else {
+      setAlertMessage('Search is empty !');
+      setShowErrorAlert(true);
     }
   };
 
@@ -53,7 +79,11 @@ const App = () => {
               value={searchString}
               onChangeFunc={changeSearchString}
             />
-            <SearchButton onClickFunc={fetchCurrentWeatherData} />
+            <SearchButton
+              onClickFunc={fetchCurrentWeatherData}
+              loading={dataLoadingActive}
+              error={showErrorAlert}
+            />
           </SearchBar>
         </Container>
       </Header>

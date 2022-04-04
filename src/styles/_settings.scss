@@ -2,12 +2,13 @@ $color-dark: #2c3e50;
 $color-main: #2980b9;
 $color-light: #ecf0f1;
 $color-light-opaque: rgba(236, 240, 241, 0.25);
+$color-error: #c0392b;
 
 $font-main: 'Roboto', sans-serif;
 
 $base-size: 14px;
-
 $radius: 12px;
+$duration: 0.25s;
 
 @mixin resetInputStyle {
   border: none;

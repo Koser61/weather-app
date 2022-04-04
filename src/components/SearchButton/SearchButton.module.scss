@@ -9,8 +9,15 @@
   cursor: pointer;
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
+  transition: all $duration ease-in-out;
 
   svg {
     font-size: 30px;
   }
+}
+
+.error {
+  @extend .component;
+  background-color: $color-error;
+  transition: all $duration ease-in-out;
 }
