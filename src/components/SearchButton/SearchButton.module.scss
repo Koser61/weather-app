@@ -21,3 +21,23 @@
   background-color: $color-error;
   transition: all $duration ease-in-out;
 }
+
+@media (pointer: coarse) {
+  .component:hover {
+    background-color: lighten($color-main, 7.5%);
+  }
+
+  .error:hover {
+    background-color: lighten($color-error, 7.5%);
+  }
+}
+
+@media (pointer: fine) {
+  .component:hover {
+    background-color: lighten($color-main, 7.5%);
+  }
+
+  .error:hover {
+    background-color: lighten($color-error, 7.5%);
+  }
+}

@@ -36,9 +36,22 @@
   width: 30px;
   background-color: transparent;
   cursor: pointer;
+  transition: all $duration ease-in-out;
 
   svg {
     font-size: 20px;
     color: $color-light;
+  }
+}
+
+@media (pointer: coarse) {
+  .closeButton:hover {
+    transform: scale(1.4);
+  }
+}
+
+@media (pointer: fine) {
+  .closeButton:hover {
+    transform: scale(1.4);
   }
 }
