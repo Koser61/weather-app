@@ -19,7 +19,6 @@
 .error {
   @extend .component;
   background-color: $color-error;
-  transition: all $duration ease-in-out;
 }
 
 @media (pointer: coarse) {
