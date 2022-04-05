@@ -7,6 +7,7 @@ import SearchButton from './components/SearchButton/SearchButton';
 import Container from './components/Container/Container';
 import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 import Alert from './components/Alert/Alert';
+import AnimateMount from './components/AnimateMount/AnimateMount';
 
 import './App.scss';
 
@@ -90,13 +91,18 @@ const App = () => {
         </Container>
       </Header>
       <main>
-        <Container>
-          {showErrorAlert &&
+        <Container alert>
+          <AnimateMount show={showErrorAlert} variant='horizontalFadeInOut'>
             <Alert
               message={alertMessage}
               onCloseFunc={setShowErrorAlert}
-            />}
-          {dataLoaded && <CurrentWeather data={currentWeatherData} />}
+            />
+          </AnimateMount>
+        </Container>
+        <Container>
+          <AnimateMount show={dataLoaded} variant='verticalFadeInOut'>
+            <CurrentWeather data={currentWeatherData} />
+          </AnimateMount>
         </Container>
       </main>
     </>
