@@ -25,6 +25,8 @@ const App = () => {
     setShowErrorAlert(false);
 
     if(searchString !== '') {
+      setDataLoaded(false);
+      
       const options = {
         method: 'GET',
         headers: {
