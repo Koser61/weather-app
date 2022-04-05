@@ -6,20 +6,23 @@ import SearchInput from './components/SearchInput/SearchInput';
 import SearchButton from './components/SearchButton/SearchButton';
 import Container from './components/Container/Container';
 import CurrentWeather from './components/CurrentWeather/CurrentWeather';
+import Alert from './components/Alert/Alert';
 
 import './App.scss';
 
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
-  const [dataLoadingActive, setDataLoadingActive] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [dataLoaded, setDataLoaded] = useState(false);
 
+  const [dataLoadingActive, setDataLoadingActive] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [currentWeatherData, changeCurrentWeatherData] = useState({});
 
   const fetchCurrentWeatherData = async () => {
+    setShowErrorAlert(false);
+
     if(searchString !== '') {
       const options = {
         method: 'GET',
@@ -37,7 +40,6 @@ const App = () => {
   
       try {
         setAlertMessage('');
-        setShowErrorAlert(false);
         setDataLoadingActive(true);
 
         const response = await fetch(url, options);
@@ -49,7 +51,7 @@ const App = () => {
           setDataLoadingActive(false);
         } else {
           if(data.cod === '404') {
-            setAlertMessage("Cannot find given location");
+            setAlertMessage("Couldn't find given location");
             setShowErrorAlert(true);
             setDataLoadingActive(false);
           } else {
@@ -65,7 +67,7 @@ const App = () => {
         setDataLoadingActive(false);
       }
     } else {
-      setAlertMessage('Search is empty !');
+      setAlertMessage('Please enter location to search');
       setShowErrorAlert(true);
     }
   };
@@ -89,9 +91,12 @@ const App = () => {
       </Header>
       <main>
         <Container>
-          {dataLoaded &&
-            <CurrentWeather data={currentWeatherData} />
-          }
+          {showErrorAlert &&
+            <Alert
+              message={alertMessage}
+              onCloseFunc={setShowErrorAlert}
+            />}
+          {dataLoaded && <CurrentWeather data={currentWeatherData} />}
         </Container>
       </main>
     </>
