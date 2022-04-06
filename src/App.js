@@ -12,6 +12,8 @@ import WeatherForecast from './components/WeatherForecast/WeatherForecast';
 
 import './App.scss';
 
+import { data } from './mockForecastData';
+
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
@@ -106,7 +108,7 @@ const App = () => {
           <AnimateMount show={dataLoaded} variant='verticalFadeInOut'>
             <CurrentWeather data={currentWeatherData} />
           </AnimateMount>
-          <WeatherForecast />
+          <WeatherForecast data={data} />
         </Container>
       </main>
     </>
