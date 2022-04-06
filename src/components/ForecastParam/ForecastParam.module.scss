@@ -1,0 +1,36 @@
+@import '../../styles/settings';
+
+.icon {
+  font-size: 30px;
+}
+
+.component {
+  font-family: $font-main;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    width: fit-content;
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-top: 6px;
+  }
+}
+
+.hide {
+  @extend .component;
+}
+
+.value {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+@media only screen and(max-width: 500px) {
+  .hide {
+    display: none;
+  }
+}
