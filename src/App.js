@@ -8,6 +8,7 @@ import Container from './components/Container/Container';
 import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 import Alert from './components/Alert/Alert';
 import AnimateMount from './components/AnimateMount/AnimateMount';
+import WeatherForecast from './components/WeatherForecast/WeatherForecast';
 
 import './App.scss';
 
@@ -105,6 +106,7 @@ const App = () => {
           <AnimateMount show={dataLoaded} variant='verticalFadeInOut'>
             <CurrentWeather data={currentWeatherData} />
           </AnimateMount>
+          <WeatherForecast />
         </Container>
       </main>
     </>

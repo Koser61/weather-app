@@ -1,0 +1,96 @@
+@import '../../styles/settings';
+
+.header {
+  padding: calc($base-size / 2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-family: $font-main;
+    font-size: 18px;
+  }
+}
+
+.dropdownButton {
+  @include resetInputStyle();
+  background-color: transparent;
+  cursor: pointer;
+
+  svg {
+    font-size: 30px;
+    color: $color-light;
+  }
+}
+
+/* DATA ENTRY */
+
+.dataEntry {
+  padding: calc($base-size / 2);
+  border: 1px solid $color-light-opaque;
+  border-radius: $radius;
+  box-shadow: $elevation-1;
+  margin-top: $base-size;
+}
+
+.dataEntryWrapper {
+  width: 100%;
+  display: inline-flex;
+}
+
+.hourBlock {
+  display: inline-flex;
+  align-items: center;
+  border-right: 1px solid $color-light-opaque;
+
+  p {
+    font-family: $font-main;
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: calc($base-size / 2);
+  }
+}
+
+.params {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+/* PARAM */
+
+.iconParam {
+  font-size: 30px;
+}
+
+.param {
+  font-family: $font-main;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    width: fit-content;
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-top: 6px;
+  }
+}
+
+.paramHide {
+  @extend .param;
+}
+
+.paramValue {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+@media only screen and(max-width: 500px) {
+  .paramHide {
+    display: none;
+  }
+}
