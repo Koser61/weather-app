@@ -6,17 +6,26 @@ import WeatherIcon from '../WeatherIcon/WeatherIcon';
 import styles from './DayForecastEntry.module.scss';
 
 const DayForecastEntry = ({ data }) => {
-  const { main, weather, wind, pop, dt_txt } = data;
+  const { main, weather, wind, pop, dt } = data;
 
-  const timeTxt = dt_txt.split(' ')[1];
-  const hourSplit = timeTxt.split(':');
-  const hour = `${hourSplit[0]}:${hourSplit[1]}`;
+  const getHour = () => {
+    const milliseconds = dt * 1000;
+    const dateObject = new Date(milliseconds);
+
+    const hour = dateObject.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: false
+    });
+    
+    return hour;
+  };
 
   return (
     <div className={styles.component}>
       <div className={styles.wrapper}>
         <div className={styles.hourBlock}>
-          <p>{hour}</p>
+          <p>{getHour()}</p>
         </div>
         <div className={styles.params}>
           <ForecastParam icon>
