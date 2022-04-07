@@ -8,7 +8,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './DayForecast.module.scss';
 
-const DayForecast = ({ dateTime, entries, timezone }) => {
+const DayForecast = ({ dateTime, entries }) => {
   const getDate = () => {
     const milliseconds = dateTime * 1000;
     const dateObject = new Date(milliseconds);
@@ -43,7 +43,6 @@ const DayForecast = ({ dateTime, entries, timezone }) => {
 
 DayForecast.propTypes = {
   dateTime: PropTypes.number.isRequired,
-  timezone: PropTypes.number.isRequired,
   entries: PropTypes.array.isRequired,
 };
 
