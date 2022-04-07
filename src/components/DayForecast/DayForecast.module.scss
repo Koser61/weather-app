@@ -1,0 +1,24 @@
+@import '../../styles/settings';
+
+.header {
+  padding: calc($base-size / 2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-family: $font-main;
+    font-size: 18px;
+  }
+}
+
+.dropdownButton {
+  @include resetInputStyle();
+  background-color: transparent;
+  cursor: pointer;
+
+  svg {
+    font-size: 30px;
+    color: $color-light;
+  }
+}
