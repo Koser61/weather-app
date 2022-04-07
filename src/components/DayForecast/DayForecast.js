@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-//import { DateTime } from 'luxon';
 
 import Card from '../Card/Card';
 import DayForecastEntry from '../DayForecastEntry/DayForecastEntry';
@@ -13,7 +12,7 @@ const DayForecast = ({ dateTime, entries, timezone }) => {
   const getDate = () => {
     const milliseconds = dateTime * 1000;
     const dateObject = new Date(milliseconds);
-    
+
     const date = dateObject.toLocaleString('en-US', {
       weekday: 'long',
       day: 'numeric',
@@ -45,7 +44,7 @@ const DayForecast = ({ dateTime, entries, timezone }) => {
 DayForecast.propTypes = {
   dateTime: PropTypes.number.isRequired,
   timezone: PropTypes.number.isRequired,
-  //entries: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired,
 };
 
 export default DayForecast;
