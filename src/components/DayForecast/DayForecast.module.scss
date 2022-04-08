@@ -12,13 +12,26 @@
   }
 }
 
-.dropdownButton {
+.dropdownToggleButton {
   @include resetInputStyle();
   background-color: transparent;
   cursor: pointer;
+}
 
-  svg {
-    font-size: 30px;
-    color: $color-light;
+.buttonIcon {
+  font-size: 30px;
+  color: $color-light;
+  transition: all $duration ease-in-out;
+}
+
+@media (pointer: coarse) {
+  .buttonIcon:hover {
+    transform: scale(1.2);
+  }
+}
+
+@media (pointer: fine) {
+  .buttonIcon:hover {
+    transform: scale(1.2);
   }
 }
