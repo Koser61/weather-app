@@ -41,7 +41,7 @@ const DayForecastEntry = ({ data }) => {
             {`${Math.round(wind.speed)}m/s`}
           </ForecastParam>
           <ForecastParam description='Rain'>
-            {`${pop * 100}%`}
+            {`${Math.round(pop * 100)}%`}
           </ForecastParam>
         </div>
       </div>
