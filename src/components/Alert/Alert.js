@@ -17,7 +17,7 @@ const Alert = ({ message, onCloseFunc }) => {
         </p>
         <button
           className={styles.closeButton}
-          onClick={() => onCloseFunc()}
+          onClick={() => onCloseFunc(false)}
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>

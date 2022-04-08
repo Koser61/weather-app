@@ -12,23 +12,28 @@ import WeatherForecast from './components/WeatherForecast/WeatherForecast';
 
 import './App.scss';
 
-import { data } from './mockForecastData';
-
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-
-  const [dataLoadingActive, setDataLoadingActive] = useState(false);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [currentWeatherLoading, setCurrentWeatherLoading] = useState(false);
+  const [currentWeatherLoaded, setCurrentWeatherLoaded] = useState(false);
+  const [currentWeatherError, setCurrentWeatherError] = useState(false);
+  const [currentWeatherErrorMsg, setCurrentWeatherErrorMsg] = useState('');
+  
   const [currentWeatherData, changeCurrentWeatherData] = useState({});
+  
+  const [weatherForecastLoading, setWeatherForecastLoading] = useState(false);
+  const [weatherForecastLoaded, setWeatherForecastLoaded] = useState(false);
+  const [weatherForecastError, setWeatherForecastError] = useState(false);
+  const [weatherForecastErrorMsg, setWeatherForecastErrorMsg] = useState('');
+  
+  const [weatherForecastData, changeWeatherForecastData] = useState({});
 
   const fetchCurrentWeatherData = async () => {
-    setShowErrorAlert(false);
+    setCurrentWeatherError(false);
 
     if(searchString !== '') {
-      setDataLoaded(false);
+      setCurrentWeatherLoaded(false);
       
       const options = {
         method: 'GET',
@@ -39,43 +44,102 @@ const App = () => {
       };
       const api = {
         url: 'https://community-open-weather-map.p.rapidapi.com',
-        endpoint: '/weather',
+        endpoint: 'weather',
         urlParams: `q=${searchString}&units=metric`,
       };
-      const url = `${api.url}${api.endpoint}?${api.urlParams}`;
+      const url = `${api.url}/${api.endpoint}?${api.urlParams}`;
   
       try {
-        setAlertMessage('');
-        setDataLoadingActive(true);
+        setCurrentWeatherErrorMsg('');
+        setCurrentWeatherLoading(true);
 
         const response = await fetch(url, options);
         const data = await response.json();
 
         if(response.ok) {
           changeCurrentWeatherData(data);
-          setDataLoaded(true);
-          setDataLoadingActive(false);
+          setCurrentWeatherLoaded(true);
+          setCurrentWeatherLoading(false);
         } else {
           if(data.cod === '404') {
-            setAlertMessage("Couldn't find given location");
-            setShowErrorAlert(true);
-            setDataLoadingActive(false);
+            setCurrentWeatherErrorMsg("Couldn't find given location");
+            setCurrentWeatherError(true);
+            setCurrentWeatherLoading(false);
           } else {
-            setAlertMessage('Sorry, something went wrong');
-            setShowErrorAlert(true);
-            setDataLoadingActive(false);
+            setCurrentWeatherErrorMsg('Sorry, something went wrong');
+            setCurrentWeatherError(true);
+            setCurrentWeatherLoading(false);
           }
         }
       } catch(error) {
         console.error(error);
-        setAlertMessage('Sorry, something went wrong');
-        setShowErrorAlert(true);
-        setDataLoadingActive(false);
+        setCurrentWeatherErrorMsg('Sorry, something went wrong');
+        setCurrentWeatherError(true);
+        setCurrentWeatherLoading(false);
       }
     } else {
-      setAlertMessage('Please enter location to search');
-      setShowErrorAlert(true);
+      setCurrentWeatherErrorMsg('Please enter location to search');
+      setCurrentWeatherError(true);
     }
+  };
+
+  const fetchWeatherForecastData = async () => {
+    setWeatherForecastError(false);
+
+    if(searchString !== '') {
+      setWeatherForecastLoaded(false);
+      
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Host': process.env.REACT_APP_API_HOST,
+          'X-RapidAPI-Key': process.env.REACT_APP_API_KEY
+        }
+      };
+      const api = {
+        url: 'https://community-open-weather-map.p.rapidapi.com',
+        endpoint: 'forecast',
+        urlParams: `q=${searchString}&units=metric`,
+      };
+      const url = `${api.url}/${api.endpoint}?${api.urlParams}`;
+  
+      try {
+        setWeatherForecastErrorMsg('');
+        setWeatherForecastLoading(true);
+
+        const response = await fetch(url, options);
+        const data = await response.json();
+
+        if(response.ok) {
+          changeWeatherForecastData(data);
+          setWeatherForecastLoaded(true);
+          setWeatherForecastLoading(false);
+        } else {
+          if(data.cod === '404') {
+            setWeatherForecastErrorMsg("Couldn't find given location");
+            setWeatherForecastError(true);
+            setWeatherForecastLoading(false);
+          } else {
+            setWeatherForecastErrorMsg('Sorry, something went wrong');
+            setWeatherForecastError(true);
+            setWeatherForecastLoading(false);
+          }
+        }
+      } catch(error) {
+        console.error(error);
+        setWeatherForecastErrorMsg('Sorry, something went wrong');
+        setWeatherForecastError(true);
+        setWeatherForecastLoading(false);
+      }
+    } else {
+      setWeatherForecastErrorMsg('Please enter location to search');
+      setWeatherForecastError(true);
+    }
+  };
+
+  const handleSearchClick = () => {
+    fetchCurrentWeatherData();
+    fetchWeatherForecastData();
   };
 
   return (
@@ -88,27 +152,47 @@ const App = () => {
               onChangeFunc={changeSearchString}
             />
             <SearchButton
-              onClickFunc={fetchCurrentWeatherData}
-              loading={dataLoadingActive}
-              error={showErrorAlert}
+              onClickFunc={handleSearchClick}
+              loading={currentWeatherLoading && weatherForecastLoading}
+              error={currentWeatherError || weatherForecastError}
             />
           </SearchBar>
         </Container>
       </Header>
       <main>
         <Container alert>
-          <AnimateMount show={showErrorAlert} variant='horizontalFadeInOut'>
+          <AnimateMount
+            show={currentWeatherError}
+            variant='horizontalFadeInOut'
+          >
             <Alert
-              message={alertMessage}
-              onCloseFunc={setShowErrorAlert}
+              message={currentWeatherErrorMsg}
+              onCloseFunc={setCurrentWeatherError}
+            />
+          </AnimateMount>
+          <AnimateMount
+            show={weatherForecastError}
+            variant='horizontalFadeInOut'
+          >
+            <Alert
+              message={weatherForecastErrorMsg}
+              onCloseFunc={setWeatherForecastError}
             />
           </AnimateMount>
         </Container>
         <Container>
-          <AnimateMount show={dataLoaded} variant='verticalFadeInOut'>
+          <AnimateMount
+            show={currentWeatherLoaded}
+            variant='verticalFadeInOut'
+          >
             <CurrentWeather data={currentWeatherData} />
           </AnimateMount>
-          <WeatherForecast data={data} />
+          <AnimateMount
+            show={weatherForecastLoaded}
+            variant='verticalFadeInOut'
+          >
+            <WeatherForecast data={weatherForecastData} />
+          </AnimateMount>
         </Container>
       </main>
     </>
