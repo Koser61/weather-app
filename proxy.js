@@ -9,6 +9,10 @@ const app = express()
 
 app.use(cors())
 
+app.get('/', (req, res) => {
+  res('hi')
+})
+
 app.get('/current', (req, res) => {
   const searchString = req.query.q
   const unitsType = req.query.units
