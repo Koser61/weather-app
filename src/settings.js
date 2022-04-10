@@ -1,5 +1,5 @@
 export const api = {
-  url: '//' + window.location.hostname + ':' (window.location.hostname === 'localhost' ? '8000' : `${process.env.HOST}`),
+  url: '//' + window.location.hostname + ':' + (window.location.hostname === 'localhost' ? '8000' : `${process.env.HOST}`),
   endpoints: {
     current: 'current',
     forecast: 'forecast'
