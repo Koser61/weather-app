@@ -1,5 +1,5 @@
 export const api = {
-  url: `//${window.location.hostname}:8000`,
+  url: `//${window.location.hostname}:${process.env.PORT || 8000}`,
   endpoints: {
     current: 'current',
     forecast: 'forecast'
