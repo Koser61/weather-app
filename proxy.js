@@ -1,5 +1,6 @@
 const PORT = 8000
 const express = require('express')
+const path = require("path")
 const cors = require('cors')
 const axios = require('axios')
 require('dotenv').config()
@@ -9,7 +10,7 @@ const app = express()
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.json('hi')
+  res.sendFile(path.join(__dirname, "build", "index.html"))
 })
 
 app.get('/current', (req, res) => {

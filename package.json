@@ -1,7 +1,8 @@
 {
   "name": "weather-app",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
@@ -25,7 +26,7 @@
   },
   "scripts": {
     "start:backend": "nodemon proxy.js",
-    "start": "react-scripts start",
+    "start:frontend": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
