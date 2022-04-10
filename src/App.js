@@ -12,6 +12,8 @@ import WeatherForecast from './components/WeatherForecast/WeatherForecast';
 
 import './App.scss';
 
+import { api } from './settings';
+
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
@@ -35,41 +37,30 @@ const App = () => {
     if(searchString !== '') {
       setCurrentWeatherLoaded(false);
       
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Host': process.env.REACT_APP_API_HOST,
-          'X-RapidAPI-Key': process.env.REACT_APP_API_KEY
-        }
-      };
-      const api = {
-        url: 'https://community-open-weather-map.p.rapidapi.com',
-        endpoint: 'weather',
-        urlParams: `q=${searchString}&units=metric`,
-      };
-      const url = `${api.url}/${api.endpoint}?${api.urlParams}`;
+      const urlParams = `q=${searchString}&units=metric`;
+      const url = `${api.url}/${api.endpoints.current}?${urlParams}`;
   
       try {
         setCurrentWeatherErrorMsg('');
         setCurrentWeatherLoading(true);
 
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
 
-        if(response.ok) {
+        const responseCode = parseInt(data.cod);
+
+        if(responseCode >= 200 && responseCode <= 299) {
           changeCurrentWeatherData(data);
           setCurrentWeatherLoaded(true);
           setCurrentWeatherLoading(false);
+        } else if (responseCode === 404) {
+          setCurrentWeatherErrorMsg("Couldn't find given location");
+          setCurrentWeatherError(true);
+          setCurrentWeatherLoading(false);
         } else {
-          if(data.cod === '404') {
-            setCurrentWeatherErrorMsg("Couldn't find given location");
-            setCurrentWeatherError(true);
-            setCurrentWeatherLoading(false);
-          } else {
-            setCurrentWeatherErrorMsg('Sorry, something went wrong');
-            setCurrentWeatherError(true);
-            setCurrentWeatherLoading(false);
-          }
+          setCurrentWeatherErrorMsg('Sorry, something went wrong');
+          setCurrentWeatherError(true);
+          setCurrentWeatherLoading(false);
         }
       } catch(error) {
         console.error(error);
@@ -89,41 +80,30 @@ const App = () => {
     if(searchString !== '') {
       setWeatherForecastLoaded(false);
       
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Host': process.env.REACT_APP_API_HOST,
-          'X-RapidAPI-Key': process.env.REACT_APP_API_KEY
-        }
-      };
-      const api = {
-        url: 'https://community-open-weather-map.p.rapidapi.com',
-        endpoint: 'forecast',
-        urlParams: `q=${searchString}&units=metric`,
-      };
-      const url = `${api.url}/${api.endpoint}?${api.urlParams}`;
+      const urlParams = `q=${searchString}&units=metric`;
+      const url = `${api.url}/${api.endpoints.forecast}?${urlParams}`;
   
       try {
         setWeatherForecastErrorMsg('');
         setWeatherForecastLoading(true);
 
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
 
-        if(response.ok) {
+        const responseCode = parseInt(data.cod);
+
+        if(responseCode >= 200 && responseCode <= 299) {
           changeWeatherForecastData(data);
           setWeatherForecastLoaded(true);
           setWeatherForecastLoading(false);
+        } else if (responseCode === 404) {
+          setWeatherForecastErrorMsg("Couldn't find given location");
+          setWeatherForecastError(true);
+          setWeatherForecastLoading(false);
         } else {
-          if(data.cod === '404') {
-            setWeatherForecastErrorMsg("Couldn't find given location");
-            setWeatherForecastError(true);
-            setWeatherForecastLoading(false);
-          } else {
-            setWeatherForecastErrorMsg('Sorry, something went wrong');
-            setWeatherForecastError(true);
-            setWeatherForecastLoading(false);
-          }
+          setWeatherForecastErrorMsg('Sorry, something went wrong');
+          setWeatherForecastError(true);
+          setWeatherForecastLoading(false);
         }
       } catch(error) {
         console.error(error);
