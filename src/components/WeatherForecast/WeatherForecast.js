@@ -3,42 +3,44 @@ import PropTypes from 'prop-types';
 import DayForecast from '../DayForecast/DayForecast';
 
 const WeatherForecast = ({ data }) => {
-  const groupDataEntriesByDay = () => {
-    const dateToDateString = (date) => {
-      const milliseconds = date * 1000;
-      const entryDateTime = new Date(milliseconds);
+  const dateToDateString = (date) => {
+    const milliseconds = date * 1000;
+    const entryDateTime = new Date(milliseconds);
 
-      const years = entryDateTime.getFullYear();
-      const months = entryDateTime.getMonth();
-      const days = entryDateTime.getDate();
+    const years = entryDateTime.getFullYear();
+    const months = entryDateTime.getMonth();
+    const days = entryDateTime.getDate();
 
-      const entryDate = new Date(years, months, days);
+    const entryDate = new Date(years, months, days);
 
-      return entryDate.toDateString();
-    };
+    return entryDate.toDateString();
+  };
 
-    const { list } = data;
+  const getForecastDates = () => {
+    const forecastDates = [];
 
-    const forecastDaysDates = [];
-
-    for(let dataEntry of list) {
+    for(let dataEntry of data.list) {
       const entryDateString = dateToDateString(dataEntry.dt);
 
-      if(!forecastDaysDates.includes(entryDateString)) {
-        forecastDaysDates.push(entryDateString);
+      if(!forecastDates.includes(entryDateString)) {
+        forecastDates.push(entryDateString);
       }
     }
 
-    const forecastDays = [];
+    return forecastDates;
+  };
 
-    for(let forecastDate of forecastDaysDates) {
+  const groupDataEntriesByDay = (forecastDates) => {
+    const groupedEntries = [];
+
+    for(let forecastDate of forecastDates) {
       const date = new Date(forecastDate);
       const dateLocaleString = date.toLocaleString('en-US', {
         weekday: 'long',
         day: 'numeric',
         month: 'long'
       });
-      const entries = list.filter(entry =>
+      const entries = data.list.filter(entry =>
         dateToDateString(entry.dt) === forecastDate
       );
 
@@ -47,17 +49,19 @@ const WeatherForecast = ({ data }) => {
         entries: entries,
       };
 
-      forecastDays.push(dataObject);
+      groupedEntries.push(dataObject);
     }
 
-    return forecastDays;
+    return groupedEntries;
   };
 
-  const forecastDays = groupDataEntriesByDay();
+  const forecastDates = getForecastDates()
+
+  const groupedEntries = groupDataEntriesByDay(forecastDates);
   
   return (
     <>
-      {forecastDays.map((day, i) => {
+      {groupedEntries.map((day, i) => {
         return (
           <DayForecast
             key={i}
