@@ -16,6 +16,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "nodemon": "^2.0.15",
+    "path": "^0.12.7",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -27,6 +28,7 @@
   "scripts": {
     "start:backend": "nodemon proxy.js",
     "start:frontend": "react-scripts start",
+    "serve:production": "node proxy.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
