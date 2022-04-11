@@ -9,6 +9,8 @@ const SearchButton = ({ onClickFunc, loading, error }) => (
   <button
     className={error ? styles.error : styles.component}
     onClick={() => onClickFunc()}
+    role='search'
+    aria-label='search button'
   >
     {loading ? <FontAwesomeIcon icon={faSpinner} spin />
              : <FontAwesomeIcon icon={faMagnifyingGlassLocation} />}

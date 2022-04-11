@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styles from './SearchBar.module.scss';
 
 const SearchBar = ({ children }) => (
-  <div className={styles.component}>
+  <form className={styles.component}>
     {children}
-  </div>
+  </form>
 );
 
 SearchBar.propTypes = {

@@ -4,9 +4,7 @@ import styles from './Header.module.scss';
 
 const Header = ({ children }) => (
   <header className={styles.component}>
-    <div className={styles.container}>
-      {children}
-    </div>
+    {children}
   </header>
 );
 

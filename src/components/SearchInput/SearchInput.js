@@ -7,7 +7,10 @@ const SearchInput = ({ value, onChangeFunc }) => (
     <input
       className={styles.component}
       type='text'
+      role='searchbox'
+      aria-label='search box'
       placeholder='Search for location...'
+      autoFocus
       value={value}
       onChange={event => onChangeFunc(event.target.value)}
     />
