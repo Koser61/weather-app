@@ -12,8 +12,6 @@ import WeatherForecast from './components/WeatherForecast/WeatherForecast';
 
 import './App.scss';
 
-import { api } from './settings';
-
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
@@ -38,7 +36,7 @@ const App = () => {
       setCurrentWeatherLoaded(false);
       
       const urlParams = `q=${searchString}&units=metric`;
-      const url = `${api.url}/${api.endpoints.current}?${urlParams}`;
+      const url = `/current?${urlParams}`;
   
       try {
         setCurrentWeatherErrorMsg('');
@@ -81,7 +79,7 @@ const App = () => {
       setWeatherForecastLoaded(false);
       
       const urlParams = `q=${searchString}&units=metric`;
-      const url = `${api.url}/${api.endpoints.forecast}?${urlParams}`;
+      const url = `/forecast?${urlParams}`;
   
       try {
         setWeatherForecastErrorMsg('');
