@@ -8,7 +8,7 @@ It uses Open Weather Map API to fetch weather data for searched location.
 It was made to practice **async/await** syntax,  **react-spring animations** and learn how to implement simple proxy for API calls.
   
 
-### Live demo [_here_](https://powerful-cliffs-69402.herokuapp.com/).
+### Live demo [_here_](https://vast-refuge-29818.herokuapp.com/).
 
 >*If page is loading - please wait, server is waking up (free Heroku hosting).*
   
