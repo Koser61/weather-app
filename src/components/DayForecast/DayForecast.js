@@ -38,13 +38,13 @@ const DayForecast = ({ date, entries }) => {
       </header>
       {openDropdown((style, item) =>
         item &&
-          <animated.div style={style}>
+          <animated.section style={style}>
             {entries.map((entry, i) => {
               return (
                 <DayForecastEntry key={i} data={entry} />
               );
             })}
-          </animated.div>
+          </animated.section>
       )}
     </Card>
   );
