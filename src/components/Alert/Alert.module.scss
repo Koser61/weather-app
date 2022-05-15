@@ -27,9 +27,19 @@
   align-items: center;
 }
 
+.messages {
+  :not(:last-child) {
+    margin-bottom: $base-size;
+  }
+}
+
 .message {
   font-size: 16px;
   margin: 0 $base-size 0 $base-size;
+
+  span {
+    margin-right: calc($base-size / 2);
+  }
 }
 
 .closeButton {

@@ -5,16 +5,20 @@ import { faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icon
 
 import styles from './Alert.module.scss';
 
-const Alert = ({ message, onCloseFunc }) => {
+const Alert = ({ messages, onCloseFunc }) => {
   return (
     <div className={styles.error}>
       <div className={styles.wrapper}>
         <div className={styles.icon}>
           <FontAwesomeIcon icon={faTriangleExclamation} />
         </div>
-        <p className={styles.message}>
-          {message}
-        </p>
+        <div className={styles.messages}>
+          {messages.map((message, i) => (
+            <p key={i} className={styles.message}>
+              <span>•</span>{message}
+            </p>
+          ))}
+        </div>
         <button
           className={styles.closeButton}
           onClick={() => onCloseFunc(false)}
@@ -27,7 +31,7 @@ const Alert = ({ message, onCloseFunc }) => {
 };
 
 Alert.propTypes = {
-  message: PropTypes.string.isRequired,
+  messages: PropTypes.array.isRequired,
   onCloseFunc: PropTypes.func.isRequired,
 };
 

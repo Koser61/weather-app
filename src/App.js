@@ -15,109 +15,101 @@ import './App.scss';
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
+  const [showError, setShowError] = useState(false);
+
   const [currentWeatherLoading, setCurrentWeatherLoading] = useState(false);
   const [currentWeatherLoaded, setCurrentWeatherLoaded] = useState(false);
-  const [currentWeatherError, setCurrentWeatherError] = useState(false);
   const [currentWeatherErrorMsg, setCurrentWeatherErrorMsg] = useState('');
   
   const [currentWeatherData, changeCurrentWeatherData] = useState({});
   
   const [weatherForecastLoading, setWeatherForecastLoading] = useState(false);
   const [weatherForecastLoaded, setWeatherForecastLoaded] = useState(false);
-  const [weatherForecastError, setWeatherForecastError] = useState(false);
   const [weatherForecastErrorMsg, setWeatherForecastErrorMsg] = useState('');
   
   const [weatherForecastData, changeWeatherForecastData] = useState({});
 
   const fetchCurrentWeatherData = async () => {
-    setCurrentWeatherError(false);
-
-    if(searchString !== '') {
-      setCurrentWeatherLoaded(false);
-      
-      const urlParams = `q=${searchString}&units=metric`;
-      const url = `/current?${urlParams}`;
+    setCurrentWeatherLoaded(false);
+    setCurrentWeatherLoading(true);
+    setCurrentWeatherErrorMsg('');
+    
+    const urlParams = `q=${searchString}&units=metric`;
+    const url = `/current?${urlParams}`;
   
-      try {
-        setCurrentWeatherErrorMsg('');
-        setCurrentWeatherLoading(true);
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
 
-        const response = await fetch(url);
-        const data = await response.json();
+      const responseCode = parseInt(data.cod);
 
-        const responseCode = parseInt(data.cod);
-
-        if(responseCode >= 200 && responseCode <= 299) {
-          changeCurrentWeatherData(data);
-          setCurrentWeatherLoaded(true);
-          setCurrentWeatherLoading(false);
-        } else if (responseCode === 404) {
-          setCurrentWeatherErrorMsg("Couldn't find given location");
-          setCurrentWeatherError(true);
-          setCurrentWeatherLoading(false);
-        } else {
-          setCurrentWeatherErrorMsg('Sorry, something went wrong');
-          setCurrentWeatherError(true);
-          setCurrentWeatherLoading(false);
-        }
-      } catch(error) {
-        console.error(error);
+      if(responseCode >= 200 && responseCode <= 299) {
+        changeCurrentWeatherData(data);
+        setCurrentWeatherLoaded(true);
+        setCurrentWeatherLoading(false);
+      } else if (responseCode === 404) {
+        setCurrentWeatherErrorMsg('Couldn\'t find given location');
+        setShowError(true);
+        setCurrentWeatherLoading(false);
+      } else {
         setCurrentWeatherErrorMsg('Sorry, something went wrong');
-        setCurrentWeatherError(true);
+        setShowError(true);
         setCurrentWeatherLoading(false);
       }
-    } else {
-      setCurrentWeatherErrorMsg('Please enter location to search');
-      setCurrentWeatherError(true);
+    } catch(error) {
+      console.error(error);
+      setCurrentWeatherErrorMsg('Sorry, something went wrong');
+      setShowError(true);
+      setCurrentWeatherLoading(false);
     }
   };
 
   const fetchWeatherForecastData = async () => {
-    setWeatherForecastError(false);
-
-    if(searchString !== '') {
-      setWeatherForecastLoaded(false);
-      
-      const urlParams = `q=${searchString}&units=metric`;
-      const url = `/forecast?${urlParams}`;
+    setWeatherForecastLoaded(false);
+    setWeatherForecastLoading(true);
+    setWeatherForecastErrorMsg('');
+    
+    const urlParams = `q=${searchString}&units=metric`;
+    const url = `/forecast?${urlParams}`;
   
-      try {
-        setWeatherForecastErrorMsg('');
-        setWeatherForecastLoading(true);
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
 
-        const response = await fetch(url);
-        const data = await response.json();
+      const responseCode = parseInt(data.cod);
 
-        const responseCode = parseInt(data.cod);
-
-        if(responseCode >= 200 && responseCode <= 299) {
-          changeWeatherForecastData(data);
-          setWeatherForecastLoaded(true);
-          setWeatherForecastLoading(false);
-        } else if (responseCode === 404) {
-          setWeatherForecastErrorMsg("Couldn't find given location");
-          setWeatherForecastError(true);
-          setWeatherForecastLoading(false);
-        } else {
-          setWeatherForecastErrorMsg('Sorry, something went wrong');
-          setWeatherForecastError(true);
-          setWeatherForecastLoading(false);
-        }
-      } catch(error) {
-        console.error(error);
+      if(responseCode >= 200 && responseCode <= 299) {
+        changeWeatherForecastData(data);
+        setWeatherForecastLoaded(true);
+        setWeatherForecastLoading(false);
+      } else if (responseCode === 404) {
+        setWeatherForecastErrorMsg('Couldn\'t find given location');
+        setShowError(true);
+        setWeatherForecastLoading(false);
+      } else {
         setWeatherForecastErrorMsg('Sorry, something went wrong');
-        setWeatherForecastError(true);
+        setShowError(true);
         setWeatherForecastLoading(false);
       }
-    } else {
-      setWeatherForecastErrorMsg('Please enter location to search');
-      setWeatherForecastError(true);
+    } catch(error) {
+      console.error(error);
+      setWeatherForecastErrorMsg('Sorry, something went wrong');
+      setShowError(true);
+      setWeatherForecastLoading(false);
     }
   };
 
   const handleSearchClick = () => {
-    fetchCurrentWeatherData();
-    fetchWeatherForecastData();
+    setShowError(false);
+
+    if(searchString !== '') {
+      fetchCurrentWeatherData();
+      fetchWeatherForecastData();
+    } else {
+      setCurrentWeatherErrorMsg('Please enter location to search');
+      setWeatherForecastErrorMsg('Please enter location to search');
+      setShowError(true);
+    }
   };
 
   return (
@@ -132,7 +124,7 @@ const App = () => {
             <SearchButton
               onClickFunc={handleSearchClick}
               loading={currentWeatherLoading && weatherForecastLoading}
-              error={currentWeatherError || weatherForecastError}
+              error={showError}
             />
           </SearchBar>
         </Container>
@@ -140,21 +132,12 @@ const App = () => {
       <main>
         <Container alert>
           <AnimateMount
-            show={currentWeatherError}
+            show={showError}
             variant='horizontalFadeInOut'
           >
             <Alert
-              message={currentWeatherErrorMsg}
-              onCloseFunc={setCurrentWeatherError}
-            />
-          </AnimateMount>
-          <AnimateMount
-            show={weatherForecastError}
-            variant='horizontalFadeInOut'
-          >
-            <Alert
-              message={weatherForecastErrorMsg}
-              onCloseFunc={setWeatherForecastError}
+              messages={[currentWeatherErrorMsg, weatherForecastErrorMsg]}
+              onCloseFunc={setShowError}
             />
           </AnimateMount>
         </Container>
