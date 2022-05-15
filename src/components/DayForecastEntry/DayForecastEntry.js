@@ -4,6 +4,7 @@ import ForecastParam from '../ForecastParam/ForecastParam';
 import WeatherIcon from '../WeatherIcon/WeatherIcon';
 
 import { timestampToHour } from '../../utils/dateUtils';
+import { parseCelsius, parseWind, toPercentage } from '../../utils/unitUtils';
 
 import styles from './DayForecastEntry.module.scss';
 
@@ -21,16 +22,16 @@ const DayForecastEntry = ({ data }) => {
             <WeatherIcon iconCode={weather[0].icon} />
           </ForecastParam>
           <ForecastParam description='Min'>
-            {`${Math.round(main.temp_min)}°C`}
+            {parseCelsius(main.temp_min)}
           </ForecastParam>
           <ForecastParam description='Max'>
-            {`${Math.round(main.temp_max)}°C`}
+            {parseCelsius(main.temp_max)}
           </ForecastParam>
           <ForecastParam description='Wind' hide>
-            {`${Math.round(wind.speed)}m/s`}
+            {parseWind(wind.speed)}
           </ForecastParam>
           <ForecastParam description='Rain'>
-            {`${Math.round(pop * 100)}%`}
+            {toPercentage(pop)}
           </ForecastParam>
         </div>
       </div>
