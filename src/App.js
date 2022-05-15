@@ -15,7 +15,6 @@ import './App.scss';
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
-  //const [errorMessages, changeErrorMessages] = useState([]);
   const [showError, setShowError] = useState(false);
 
   const [currentWeatherLoading, setCurrentWeatherLoading] = useState(false);
