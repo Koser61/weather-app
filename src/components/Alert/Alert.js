@@ -15,7 +15,7 @@ const Alert = ({ messages, onCloseFunc }) => {
         <div className={styles.messages}>
           {messages.map((message, i) => (
             <p key={i} className={styles.message}>
-              {message}
+              <span>•</span>{message}
             </p>
           ))}
         </div>

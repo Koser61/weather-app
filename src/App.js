@@ -15,22 +15,25 @@ import './App.scss';
 const App = () => {
   const [searchString, changeSearchString] = useState('');
 
-  const [errorMessages, changeErrorMessages] = useState([]);
+  //const [errorMessages, changeErrorMessages] = useState([]);
   const [showError, setShowError] = useState(false);
 
   const [currentWeatherLoading, setCurrentWeatherLoading] = useState(false);
   const [currentWeatherLoaded, setCurrentWeatherLoaded] = useState(false);
+  const [currentWeatherErrorMsg, setCurrentWeatherErrorMsg] = useState('');
   
   const [currentWeatherData, changeCurrentWeatherData] = useState({});
   
   const [weatherForecastLoading, setWeatherForecastLoading] = useState(false);
   const [weatherForecastLoaded, setWeatherForecastLoaded] = useState(false);
+  const [weatherForecastErrorMsg, setWeatherForecastErrorMsg] = useState('');
   
   const [weatherForecastData, changeWeatherForecastData] = useState({});
 
   const fetchCurrentWeatherData = async () => {
     setCurrentWeatherLoaded(false);
     setCurrentWeatherLoading(true);
+    setCurrentWeatherErrorMsg('');
     
     const urlParams = `q=${searchString}&units=metric`;
     const url = `/current?${urlParams}`;
@@ -46,17 +49,17 @@ const App = () => {
         setCurrentWeatherLoaded(true);
         setCurrentWeatherLoading(false);
       } else if (responseCode === 404) {
-        changeErrorMessages([...errorMessages, 'Couldn\'t find given location']);
+        setCurrentWeatherErrorMsg('Couldn\'t find given location');
         setShowError(true);
         setCurrentWeatherLoading(false);
       } else {
-        changeErrorMessages([...errorMessages, 'Sorry, something went wrong']);
+        setCurrentWeatherErrorMsg('Sorry, something went wrong');
         setShowError(true);
         setCurrentWeatherLoading(false);
       }
     } catch(error) {
       console.error(error);
-      changeErrorMessages([...errorMessages, 'Sorry, something went wrong']);
+      setCurrentWeatherErrorMsg('Sorry, something went wrong');
       setShowError(true);
       setCurrentWeatherLoading(false);
     }
@@ -65,6 +68,7 @@ const App = () => {
   const fetchWeatherForecastData = async () => {
     setWeatherForecastLoaded(false);
     setWeatherForecastLoading(true);
+    setWeatherForecastErrorMsg('');
     
     const urlParams = `q=${searchString}&units=metric`;
     const url = `/forecast?${urlParams}`;
@@ -80,30 +84,31 @@ const App = () => {
         setWeatherForecastLoaded(true);
         setWeatherForecastLoading(false);
       } else if (responseCode === 404) {
-        changeErrorMessages([...errorMessages, 'Couldn\'t find given location']);
+        setWeatherForecastErrorMsg('Couldn\'t find given location');
         setShowError(true);
         setWeatherForecastLoading(false);
       } else {
-        changeErrorMessages([...errorMessages, 'Sorry, something went wrong']);
+        setWeatherForecastErrorMsg('Sorry, something went wrong');
         setShowError(true);
         setWeatherForecastLoading(false);
       }
     } catch(error) {
       console.error(error);
-      changeErrorMessages([...errorMessages, 'Sorry, something went wrong']);
+      setWeatherForecastErrorMsg('Sorry, something went wrong');
       setShowError(true);
       setWeatherForecastLoading(false);
     }
   };
 
   const handleSearchClick = () => {
+    setShowError(false);
+
     if(searchString !== '') {
-      setShowError(false);
-      changeErrorMessages([]);
       fetchCurrentWeatherData();
       fetchWeatherForecastData();
     } else {
-      changeErrorMessages([...errorMessages, 'Please enter location to search']);
+      setCurrentWeatherErrorMsg('Please enter location to search');
+      setWeatherForecastErrorMsg('Please enter location to search');
       setShowError(true);
     }
   };
@@ -132,7 +137,7 @@ const App = () => {
             variant='horizontalFadeInOut'
           >
             <Alert
-              messages={errorMessages}
+              messages={[currentWeatherErrorMsg, weatherForecastErrorMsg]}
               onCloseFunc={setShowError}
             />
           </AnimateMount>
