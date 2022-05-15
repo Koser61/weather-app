@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 
   h2 {
     font-family: $font-main;
@@ -18,20 +19,25 @@
   cursor: pointer;
 }
 
-.buttonIcon {
+.chevronIcon {
   font-size: 30px;
   color: $color-light;
   transition: all $duration ease-in-out;
 }
 
 @media (pointer: coarse) {
-  .buttonIcon:hover {
-    transform: scale(1.2);
+  .header:hover {
+    .chevronIcon {
+      transform: scale(1.2);
+    }
   }
+  
 }
 
 @media (pointer: fine) {
-  .buttonIcon:hover {
-    transform: scale(1.2);
+  .header:hover {
+    .chevronIcon {
+      transform: scale(1.2);
+    }
   }
 }

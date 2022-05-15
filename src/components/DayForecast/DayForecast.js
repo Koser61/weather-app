@@ -25,28 +25,26 @@ const DayForecast = ({ date, entries }) => {
 
   return (
     <Card>
-      <div className={styles.header}>
+      <header
+        className={styles.header}
+        onClick={() => setDropdownOpen(!dropdownOpen)}
+      >
         <h2>{date}</h2>
-        <button
-          className={styles.dropdownToggleButton}
-          onClick={() => setDropdownOpen(!dropdownOpen)}
-        >
-          <animated.div style={rotateIcon}>
-            <div className={styles.buttonIcon}>
-              <FontAwesomeIcon icon={faChevronDown} />
-            </div>
-          </animated.div>
-        </button>
-      </div>
+        <animated.div style={rotateIcon}>
+          <div className={styles.chevronIcon}>
+            <FontAwesomeIcon icon={faChevronDown} />
+          </div>
+        </animated.div>
+      </header>
       {openDropdown((style, item) =>
         item &&
-          <animated.div style={style}>
+          <animated.section style={style}>
             {entries.map((entry, i) => {
               return (
                 <DayForecastEntry key={i} data={entry} />
               );
             })}
-          </animated.div>
+          </animated.section>
       )}
     </Card>
   );
