@@ -5,18 +5,12 @@ import WeatherParam from '../WeatherParam/WeatherParam';
 import WeatherIcon from '../WeatherIcon/WeatherIcon';
 import WindDirection from '../WindDirection/WindDirection';
 
+import { timestampToShortDate } from '../../utils/dateUtils';
+
 import styles from './CurrentWeather.module.scss';
 
 const CurrentWeather = ({ data }) => {
   const { name, sys, dt, weather, main, wind, visibility, clouds } = data;
-
-  const miliseconds = dt * 1000;
-  const dateObject = new Date(miliseconds);
-  const date = dateObject.toLocaleString('en-US', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long'
-  });
 
   const getVisibilityString = () => {
     if(visibility >= 1000) {
@@ -31,7 +25,7 @@ const CurrentWeather = ({ data }) => {
     <Card>
       <div className={styles.header}>
         <h1>{`${name}, ${sys.country}`}</h1>
-        <p>{date}</p>
+        <p>{timestampToShortDate(dt)}</p>
       </div>
       <div className={styles.grid}>
         <div className={styles.mainParams}>

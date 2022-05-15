@@ -3,29 +3,18 @@ import PropTypes from 'prop-types';
 import ForecastParam from '../ForecastParam/ForecastParam';
 import WeatherIcon from '../WeatherIcon/WeatherIcon';
 
+import { timestampToHour } from '../../utils/dateUtils';
+
 import styles from './DayForecastEntry.module.scss';
 
 const DayForecastEntry = ({ data }) => {
   const { main, weather, wind, pop, dt } = data;
 
-  const getHour = () => {
-    const milliseconds = dt * 1000;
-    const dateObject = new Date(milliseconds);
-
-    const hour = dateObject.toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: false
-    });
-    
-    return hour;
-  };
-
   return (
     <div className={styles.component}>
       <div className={styles.wrapper}>
         <div className={styles.hourBlock}>
-          <p>{getHour()}</p>
+          <p>{timestampToHour(dt)}</p>
         </div>
         <div className={styles.params}>
           <ForecastParam icon>

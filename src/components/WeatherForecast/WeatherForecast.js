@@ -1,26 +1,15 @@
 import PropTypes from 'prop-types';
 
+import { timestampToLongDate, longDateToShortDate } from '../../utils/dateUtils';
+
 import DayForecast from '../DayForecast/DayForecast';
 
 const WeatherForecast = ({ data }) => {
-  const dateToDateString = (date) => {
-    const milliseconds = date * 1000;
-    const entryDateTime = new Date(milliseconds);
-
-    const years = entryDateTime.getFullYear();
-    const months = entryDateTime.getMonth();
-    const days = entryDateTime.getDate();
-
-    const entryDate = new Date(years, months, days);
-
-    return entryDate.toDateString();
-  };
-
   const getForecastDates = () => {
     const forecastDates = [];
 
     for(let dataEntry of data.list) {
-      const entryDateString = dateToDateString(dataEntry.dt);
+      const entryDateString = timestampToLongDate(dataEntry.dt);
 
       if(!forecastDates.includes(entryDateString)) {
         forecastDates.push(entryDateString);
@@ -34,18 +23,12 @@ const WeatherForecast = ({ data }) => {
     const groupedEntries = [];
 
     for(let forecastDate of forecastDates) {
-      const date = new Date(forecastDate);
-      const dateLocaleString = date.toLocaleString('en-US', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
-      });
       const entries = data.list.filter(entry =>
-        dateToDateString(entry.dt) === forecastDate
+        timestampToLongDate(entry.dt) === forecastDate
       );
 
       const dataObject = {
-        date: dateLocaleString,
+        date: longDateToShortDate(forecastDate),
         entries: entries,
       };
 
